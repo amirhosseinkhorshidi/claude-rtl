@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Vazir';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+}
+
+/* Message content RTL */
+.rtl-enabled .whitespace-pre-wrap:not(.code-block__code *),
+.rtl-enabled .prose-messages *:not(.code-block__code *),
+.rtl-enabled .font-claude-message:not(.code-block__code *),
+.rtl-enabled [data-testid="user-message"] p,
+.rtl-enabled .font-user-message p {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: 'Vazir', system-ui, -apple-system, sans-serif !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+
+/* Input RTL */
+.rtl-enabled [role="textbox"],
+.rtl-enabled [contenteditable="true"],
+.rtl-enabled textarea,
+.rtl-enabled .edit-message-container textarea,
+.rtl-enabled .edit-message-container [contenteditable="true"] {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: 'Vazir', system-ui, -apple-system, sans-serif !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+
+/* Code blocks LTR */
+.rtl-enabled code,
+.rtl-enabled pre,
+.rtl-enabled .code-block__code,
+.rtl-enabled .code-block__code *,
+.rtl-enabled div[class*="language-"],
+.rtl-enabled .relative.flex.flex-col.rounded-lg code,
+.rtl-enabled [class*="token"] {
+  direction: ltr !important;
+  text-align: left !important;
+  font-family: monospace !important;
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+}
