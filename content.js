@@ -13,24 +13,35 @@ browser.runtime.onMessage.addListener((request) => {
 });
 
 function updateRTL() {
-    if (rtlEnabled) {
+    const isChatPage = window.location.pathname.includes('/chat/');
+    
+    if (rtlEnabled && isChatPage) {
         document.body.classList.add('rtl-enabled');
         
-        // Apply RTL to all text elements
-        const elements = document.querySelectorAll(`
-            .whitespace-pre-wrap:not(.code-block__code *),
-            .prose-messages *:not(.code-block__code *),
-            .font-claude-message:not(.code-block__code *),
-            [data-testid="user-message"] p,
-            .font-user-message p,
-            [role="textbox"],
-            [contenteditable="true"],
-            textarea
-        `);
+        const selectors = [
+            'div[data-testid*="message"] *:not(code):not(pre):not(.hljs)',
+            'div[data-testid*="conversation-turn"] *:not(code):not(pre)',
+            'div[class*="message"] *:not(code):not(pre)',
+            '.whitespace-pre-wrap:not(code):not(pre)',
+            '.prose *:not(code):not(pre)',
+            '[role="textbox"]',
+            '[contenteditable="true"]',
+            'textarea',
+            '.ProseMirror',
+            'p:not(:has(code)):not(:has(pre))',
+            'main *:not(code):not(pre):not(.hljs)'
+        ];
+
+        const elements = document.querySelectorAll(selectors.join(','));
 
         elements.forEach(el => {
-            if (!el.classList.contains('rtl-applied') && 
-                !el.tagName.toLowerCase().match(/^(code|pre)$/)) {
+
+            if (el.tagName && el.tagName.toLowerCase().match(/^(code|pre)$/)) return;
+            if (el.classList && (el.classList.contains('hljs') || 
+                el.className.includes('language-') || 
+                el.className.includes('token'))) return;
+                
+            if (!el.classList.contains('rtl-applied')) {
                 el.classList.add('rtl-applied');
             }
         });
@@ -42,16 +53,28 @@ function updateRTL() {
     }
 }
 
-const observer = new MutationObserver(_.throttle(() => {
+const observer = new MutationObserver((mutations) => {
     if (rtlEnabled) {
-        updateRTL();
+        let shouldUpdate = false;
+        mutations.forEach(mutation => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                shouldUpdate = true;
+            }
+        });
+        if (shouldUpdate) {
+            setTimeout(updateRTL, 100);
+        }
     }
-}, 100));
+});
 
 observer.observe(document.body, {
     childList: true,
     subtree: true
 });
 
-document.addEventListener('DOMContentLoaded', updateRTL);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateRTL);
+} else {
+    updateRTL();
+}
 window.addEventListener('load', updateRTL);
