@@ -1,45 +1,58 @@
 @font-face {
   font-family: 'Vazir';
-  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/npm/vazir-font@33.0.0/dist/Vazirmatn-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* Message content RTL */
-.rtl-enabled .whitespace-pre-wrap:not(.code-block__code *),
-.rtl-enabled .prose-messages *:not(.code-block__code *),
-.rtl-enabled .font-claude-message:not(.code-block__code *),
-.rtl-enabled [data-testid="user-message"] p,
-.rtl-enabled .font-user-message p {
+.rtl-enabled * {
+  font-family: 'Vazir', 'Tahoma', system-ui, sans-serif !important;
+}
+.rtl-enabled div[data-testid*="message"] *:not(code):not(pre):not(.hljs):not([class*="language"]):not([class*="token"]),
+.rtl-enabled div[data-testid*="conversation-turn"] *:not(code):not(pre):not(.hljs):not([class*="language"]):not([class*="token"]),
+.rtl-enabled div[class*="message"] *:not(code):not(pre):not(.hljs):not([class*="language"]):not([class*="token"]),
+.rtl-enabled .whitespace-pre-wrap:not(code):not(pre):not(.hljs),
+.rtl-enabled .prose *:not(code):not(pre):not(.hljs):not([class*="language"]):not([class*="token"]),
+.rtl-enabled [role="textbox"] *:not(code):not(pre):not(.hljs),
+.rtl-enabled p:not(:has(code)):not(:has(pre)) {
   direction: rtl !important;
   text-align: right !important;
-  font-family: 'Vazir', system-ui, -apple-system, sans-serif !important;
-  font-size: 1.05rem !important;
-  line-height: 1.7 !important;
+  font-family: 'Vazir', 'Tahoma', system-ui, sans-serif !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
 }
 
-/* Input RTL */
 .rtl-enabled [role="textbox"],
 .rtl-enabled [contenteditable="true"],
 .rtl-enabled textarea,
-.rtl-enabled .edit-message-container textarea,
-.rtl-enabled .edit-message-container [contenteditable="true"] {
+.rtl-enabled div[data-testid*="input"],
+.rtl-enabled .ProseMirror,
+.rtl-enabled input {
   direction: rtl !important;
   text-align: right !important;
-  font-family: 'Vazir', system-ui, -apple-system, sans-serif !important;
-  font-size: 1.05rem !important;
-  line-height: 1.7 !important;
+  font-family: 'Vazir', 'Tahoma', system-ui, sans-serif !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
 }
 
-/* Code blocks LTR */
-.rtl-enabled code,
-.rtl-enabled pre,
-.rtl-enabled .code-block__code,
-.rtl-enabled .code-block__code *,
-.rtl-enabled div[class*="language-"],
-.rtl-enabled .relative.flex.flex-col.rounded-lg code,
-.rtl-enabled [class*="token"] {
-  direction: ltr !important;
-  text-align: left !important;
-  font-family: monospace !important;
-  font-size: 0.95rem !important;
-  line-height: 1.5 !important;
+.rtl-enabled main *:not(code):not(pre):not(.hljs):not([class*="language"]):not([class*="token"]) {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: 'Vazir', 'Tahoma', system-ui, sans-serif !important;
 }
+
+.rtl-enabled h1,
+.rtl-enabled h2 {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: 'Vazir', 'Tahoma', system-ui, sans-serif !important;
+}
+
+.rtl-enabled .font-claude-message,
+.rtl-enabled .font-user-message,
+.rtl-enabled div[class*="font-"],
+.rtl-enabled span,
+.rtl-enabled div,
+.rtl-enabled p {
+  font-family: 'Vazir', 'Tahoma', system-ui, sans-serif !important;
